@@ -6,6 +6,7 @@ const contactsJoiSchema = Joi.object({
     name: Joi.string().required(),
     email: Joi.string().email().required(),
     phone: myCustomJoi.string().phoneNumber().required(),
+    favorite: Joi.boolean(),
 });
 
 const contactsMongooseSchema = new Schema({
@@ -23,7 +24,7 @@ const contactsMongooseSchema = new Schema({
         type: Boolean,
         default: false,
     }
-});
+}, { versionKey: false, timestamps: true });
 
 module.exports = {
     contactsJoiSchema,

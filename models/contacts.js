@@ -1,7 +1,12 @@
-const fs = require("fs/promises");
-const path = require("path");
+// const fs = require("fs/promises");
+// const path = require("path");
 
-const contactsPath = path.join(__dirname, './contacts.json');
+// const contactsPath = path.join(__dirname, './contacts.json');
+const { model } = require('mongoose');
+const { contactsMongooseSchema } = require('../schemas');
+const { handleMongooseError } = require("../helpers");
+
+contactsMongooseSchema.post("save", handleMongooseError);
 
 const listContacts = async () => {
   const contacts = await fs.readFile(contactsPath);

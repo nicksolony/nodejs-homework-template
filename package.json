@@ -17,8 +17,7 @@
     "joi-phone-number": "^5.1.1",
     "mongodb": "^6.3.0",
     "mongoose": "^8.0.2",
-    "morgan": "1.10.0",
-    "nanoid": "^3.3.4"
+    "morgan": "1.10.0"
   },
   "devDependencies": {
     "eslint": "7.19.0",

@@ -29,12 +29,17 @@ const contactsJoiSchema = Joi.object({
     favorite: Joi.boolean(),
 });
 
+const updateFavoriteSchema = Joi.object({
+    favorite: Joi.boolean().required(),
+});
+
 const Contact = model('contact', contactsMongooseSchema);
 
 const schemas = {
-  contactsJoiSchema,
-  contactsMongooseSchema
-}
+    contactsJoiSchema,
+    contactsMongooseSchema,
+    updateFavoriteSchema
+};
 
 module.exports = {
   Contact,

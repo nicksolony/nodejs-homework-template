@@ -2,9 +2,13 @@ const {HttpError} = require("../helpers");
 
 const validateBody = schema => {
     const func = (req, res, next) => {
+        
         const { error } = schema.validate(req.body);
         if (error) {
-            next(HttpError(400, `missing required fields - ${error.message}`));
+            if (error.message === '"favorite" is required') {
+                next(HttpError(400, `missing field favorite`));
+            } else {
+            next(HttpError(400, `missing required fields - ${error.message}`));}
         }
         next()
     }

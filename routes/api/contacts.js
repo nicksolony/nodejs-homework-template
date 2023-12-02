@@ -2,7 +2,7 @@ const express = require('express');
 
 const contactsController = require('../../controllers/contacts');
 
-const { validateBody } = require('../../middlewares');
+const { validateBody, isValidId } = require('../../middlewares');
 
 const schemas = require('../../models/contact');
 
@@ -10,7 +10,7 @@ const router = express.Router()
 
 router.get('/', contactsController.getAll);
 
-// router.get('/:contactId', contactsController.getById);
+router.get('/:contactId', isValidId, contactsController.getById);
 
 // router.post('/', validateBody(schemas.contactsJoiSchema), contactsController.add);
 

@@ -14,8 +14,8 @@ router.get('/:contactId', isValidId, contactsController.getById);
 
 router.post('/', validateBody(schemas.contactsJoiSchema), contactsController.add);
 
-// router.delete('/:contactId', contactsController.deleteById);
+router.delete('/:contactId', isValidId, contactsController.deleteById);
 
-router.put('/:contactId', validateBody(schemas.contactsJoiSchema), contactsController.updateById);
+router.put('/:contactId', isValidId, validateBody(schemas.contactsJoiSchema), contactsController.updateById);
 
 module.exports = router;

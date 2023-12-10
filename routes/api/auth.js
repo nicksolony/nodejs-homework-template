@@ -4,18 +4,20 @@ const ctrl = require("../../controllers/auth");
 
 const {validateBody, authenticate} = require("../../middlewares");
 
-const {userJoiSchema} = require("../../models/user");
+const {schemas} = require("../../models/user");
 
 const router = express.Router();
 
 // signup
-router.post("/signup", validateBody(userJoiSchema), ctrl.signup);
+router.post("/signup", validateBody(schemas.userJoiSchema), ctrl.signup);
 
 // signin
-router.post("/login", validateBody(userJoiSchema), ctrl.login);
+router.post("/login", validateBody(schemas.userJoiSchema), ctrl.login);
 
 router.get("/current", authenticate, ctrl.getCurrent);
 
 router.post("/logout", authenticate, ctrl.logout);
+
+router.patch("/", validateBody(schemas.subscriptionUpdateSchema), authenticate, ctrl.updateSubscription);
 
 module.exports = router;

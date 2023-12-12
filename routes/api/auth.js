@@ -9,8 +9,7 @@ const {schemas} = require("../../models/user");
 const router = express.Router();
 
 // signup
-router.post("/signup", validateBody(schemas.userJoiSchema), ctrl.signup);
-// не пойму что не так в задании сказано "Create an endpoint /users/signup", у меня полный URL - http://localhost:3000/api/users/signup??
+router.post("/register", validateBody(schemas.userJoiSchema), ctrl.signup);
 
 // signin
 router.post("/login", validateBody(schemas.userJoiSchema), ctrl.login);

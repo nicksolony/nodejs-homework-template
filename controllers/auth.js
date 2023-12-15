@@ -2,6 +2,7 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const gravatar = require("gravatar");
 const path = require("path");
+const fs = require("fs/promises");
 const Jimp = require("jimp");
 
 
@@ -97,10 +98,11 @@ const updateSubscription = async (req, res) => {
 const updateAvatar = async (req, res) => {
     const { _id } = req.user;
     console.log(req.file);
-    const { originalname } = req.file;
+    const { path: tempUpload, originalname } = req.file;
     const filename = `${_id}_${originalname}`;
     const resultUpload = path.join(avatarsDir, filename);
-    Jimp.read(req.file.path, (err, file) => {
+    await fs.rename(tempUpload, resultUpload);
+    Jimp.read(resultUpload, (err, file) => {
         if (err) throw err;
         file
             .resize(250, 250)

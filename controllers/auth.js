@@ -97,7 +97,9 @@ const updateSubscription = async (req, res) => {
 
 const updateAvatar = async (req, res) => {
     const { _id } = req.user;
-    console.log(req.file);
+    if (req.file === undefined) {
+        throw HttpError(400, "Please upload new avatar image");
+    };
     const { path: tempUpload, originalname } = req.file;
     const filename = `${_id}_${originalname}`;
     const resultUpload = path.join(avatarsDir, filename);

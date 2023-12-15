@@ -2,14 +2,16 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const gravatar = require("gravatar");
 const path = require("path");
-const fs = require("fs/promises");
+const Jimp = require("jimp");
 
 
 const {User} = require("../models/user");
 
 const { HttpError, ctrlWrapper } = require("../helpers");
 
-const {SECRET_KEY} = process.env;
+const { SECRET_KEY } = process.env;
+
+const avatarsDir = path.join(__dirname, "../", "public", "avatars");
 
 const signup = async (req, res) => {
     const { email, password } = req.body;
@@ -92,7 +94,25 @@ const updateSubscription = async (req, res) => {
     });
 };
 
+const updateAvatar = async (req, res) => {
+    const { _id } = req.user;
+    console.log(req.file);
+    const { originalname } = req.file;
+    const filename = `${_id}_${originalname}`;
+    const resultUpload = path.join(avatarsDir, filename);
+    Jimp.read(req.file.path, (err, file) => {
+        if (err) throw err;
+        file
+            .resize(250, 250)
+            .write(resultUpload);
+    });
+    const avatarURL = path.join("avatars", filename);
+    await User.findByIdAndUpdate(_id, { avatarURL });
 
+    res.json({
+        avatarURL,
+    });
+};
 
 module.exports = {
     signup: ctrlWrapper(signup),
@@ -100,4 +120,5 @@ module.exports = {
     getCurrent: ctrlWrapper(getCurrent),
     logout: ctrlWrapper(logout),
     updateSubscription: ctrlWrapper(updateSubscription),
+    updateAvatar: ctrlWrapper(updateAvatar),
 };

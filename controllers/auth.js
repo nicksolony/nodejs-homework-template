@@ -13,6 +13,7 @@ const {SECRET_KEY} = process.env;
 
 const signup = async (req, res) => {
     const { email, password } = req.body;
+    
     const user = await User.findOne({ email });
 
     if (user) {
@@ -28,6 +29,7 @@ const signup = async (req, res) => {
         "user": {
             email: newUser.email,
             subscription: newUser.subscription,
+            avatarURL: newUser.avatarURL,
         }
     });
 };

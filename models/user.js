@@ -52,10 +52,15 @@ const subscriptionUpdateSchema = Joi.object({
     subscription: Joi.string().valid(...subscriptions).required(),
 });
 
+const emailSchema = Joi.object({
+    email: Joi.string().pattern(emailRegexp).required(),
+});
+
 const User = model('user', userSchema);
 const schemas = {
     userJoiSchema,
-    subscriptionUpdateSchema
+    subscriptionUpdateSchema,
+    emailSchema,
 };
 
 module.exports = {
